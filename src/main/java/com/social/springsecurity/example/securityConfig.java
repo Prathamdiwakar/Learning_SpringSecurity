@@ -4,8 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,16 +19,19 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class securityConfig {
 
     @Bean
-    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) {
-        http.authorizeHttpRequests((requests) ->
-                requests.requestMatchers("/h2~console/**").permitAll().
-                        anyRequest().authenticated());
-        http.sessionManagement((session)
-                -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        //http.formLogin(withDefaults());
+    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)  {
+
+        http.authorizeHttpRequests(auth -> auth
+                .requestMatchers("/h2-console/**").permitAll()
+                .anyRequest().authenticated());
+
+        http.csrf(AbstractHttpConfigurer::disable);
+
+        http.headers(headers -> headers
+                .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
+
         http.httpBasic(withDefaults());
-        http.headers(headers ->headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
-        http.csrf(csrf -> csrf.disable());
+
         return http.build();
     }
 
