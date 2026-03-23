@@ -50,7 +50,7 @@ public class Security {
         return "Hello, Admin!";
     }
 
-    @PostMapping("/signin")
+    @PostMapping("/api/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
         Authentication authentication;
         try {
