@@ -60,7 +60,7 @@ public class securityConfig {
                 .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
 
        // http.httpBasic(withDefaults());
-       // http.addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

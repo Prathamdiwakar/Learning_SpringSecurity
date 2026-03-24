@@ -70,8 +70,8 @@ public class Security {
         List<String> roles = userDetails.getAuthorities().stream().map(
                         GrantedAuthority::getAuthority)
                 .toList();
-        LoginResponse loginResponse = new LoginResponse(userDetails.getUsername(),
-                 roles, jwtToken);
+        LoginResponse loginResponse = new LoginResponse( jwtToken, userDetails.getUsername(),
+               roles);
         return ResponseEntity.ok(loginResponse);
     }
 }

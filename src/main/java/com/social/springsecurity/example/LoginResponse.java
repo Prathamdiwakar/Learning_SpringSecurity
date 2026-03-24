@@ -19,10 +19,10 @@ public class LoginResponse {
         return roles;
     }
 
-    public LoginResponse(String jwtToken, List<String> roles, String username) {
+    public LoginResponse(String jwtToken, String username, List<String> roles) {
         this.jwtToken = jwtToken;
-        this.roles = roles;
         this.username = username;
+        this.roles = roles;
     }
 
     public void setRoles(List<String> roles) {
